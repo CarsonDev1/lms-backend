@@ -104,8 +104,17 @@ app.use(
 		explorer: true,
 		customCss: '.swagger-ui .topbar { display: none }',
 		customSiteTitle: 'LMS API Documentation',
+		swaggerOptions: {
+			url: '/api-docs/swagger.json',
+		},
 	})
 );
+
+// Serve swagger spec as JSON
+app.get('/api-docs/swagger.json', (req, res) => {
+	res.setHeader('Content-Type', 'application/json');
+	res.send(swaggerSpec);
+});
 
 // Redirect /api-docs to /api-docs/
 app.get('/api-docs', (req, res) => {
