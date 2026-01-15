@@ -98,7 +98,7 @@ if (process.env.NODE_ENV === 'development') {
 
 // API Documentation
 app.use(
-	'/api-docs',
+	'/api-docs/',
 	swaggerUi.serve,
 	swaggerUi.setup(swaggerSpec, {
 		explorer: true,
@@ -106,6 +106,11 @@ app.use(
 		customSiteTitle: 'LMS API Documentation',
 	})
 );
+
+// Redirect /api-docs to /api-docs/
+app.get('/api-docs', (req, res) => {
+	res.redirect('/api-docs/');
+});
 
 // Health check endpoint
 app.get('/health', (req, res) => {
