@@ -49,8 +49,13 @@ connectDB();
 // Trust proxy - important for rate limiting behind reverse proxy
 app.set('trust proxy', 1);
 
-// Security middlewares
-app.use(helmet());
+// Security middlewares - disable HSTS for HTTP
+app.use(
+	helmet({
+		hsts: false, // Disable HSTS to allow HTTP
+		contentSecurityPolicy: false, // Disable CSP for Swagger
+	})
+);
 
 // CORS allow all origins (reflects request origin, supports credentials)
 app.use(
