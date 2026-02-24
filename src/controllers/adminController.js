@@ -605,9 +605,8 @@ export const resetUserPassword = async (req, res) => {
 		// Generate random password if not provided
 		const passwordToSet = newPassword || crypto.randomBytes(8).toString('hex');
 
-		// Hash password
-		const hashedPassword = await bcrypt.hash(passwordToSet, 10);
-		user.password = hashedPassword;
+		// Assign plain password — the pre-save hook on User model will hash it
+		user.password = passwordToSet;
 		await user.save();
 
 		// Send email with new password
